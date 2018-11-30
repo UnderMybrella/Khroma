@@ -1,8 +1,15 @@
 package org.abimon.khroma
 
 import awaitObject
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.jackson.jacksonDeserializerOf
+import com.github.kittinunf.fuel.jackson.mapper
 import kotlinx.coroutines.*
 import org.abimon.khroma.effects.KhromaEffect
 import org.abimon.khroma.requests.RazerChromaApplication
@@ -23,6 +30,15 @@ class KhromaAPI(val uri: String) {
             } else {
                 return null to result
             }
+        }
+
+        init {
+            mapper
+                .registerModules(Jdk8Module(), JavaTimeModule(), ParameterNamesModule())
+                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                .disable(JsonGenerator.Feature.AUTO_CLOSE_TARGET)
+                .enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+                .setSerializationInclusion(JsonInclude.Include.NON_ABSENT)
         }
     }
 
