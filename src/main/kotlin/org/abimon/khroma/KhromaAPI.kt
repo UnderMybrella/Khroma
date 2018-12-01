@@ -44,10 +44,9 @@ class KhromaAPI(val uri: String) {
 
     val keepAliveJob = GlobalScope.launch {
         while (isActive && _isAlive.get()) {
-            val heartbeat = Fuel.put("$uri/heartbeat").awaitObject<RazerChromaHeartbeat>(jacksonDeserializerOf())
-            println(heartbeat)
-            _isActive.set(true)
             delay(1000)
+            Fuel.put("$uri/heartbeat").awaitObject<RazerChromaHeartbeat>(jacksonDeserializerOf())
+            _isActive.set(true)
         }
 
         uninitialise()
