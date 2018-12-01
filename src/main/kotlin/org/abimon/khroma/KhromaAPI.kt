@@ -42,6 +42,14 @@ class KhromaAPI(val uri: String) {
         }
     }
 
+    private val _isActive = AtomicBoolean(false)
+    public val isActive: Boolean
+        get() = _isActive.get()
+
+    private val _isAlive = AtomicBoolean(true)
+    public val isAlive: Boolean
+        get() = _isAlive.get()
+
     val keepAliveJob = GlobalScope.launch {
         while (isActive && _isAlive.get()) {
             delay(1000)
@@ -51,14 +59,6 @@ class KhromaAPI(val uri: String) {
 
         uninitialise()
     }
-
-    private val _isActive = AtomicBoolean(false)
-    public val isActive: Boolean
-        get() = _isActive.get()
-
-    private val _isAlive = AtomicBoolean(true)
-    public val isAlive: Boolean
-        get() = _isAlive.get()
 
     fun createKeyboardEffectBlocking(effect: KhromaEffect<*>) = runBlocking { createKeyboardEffect(effect) }
     suspend fun createKeyboardEffect(effect: KhromaEffect<*>): RazerChromaResult {

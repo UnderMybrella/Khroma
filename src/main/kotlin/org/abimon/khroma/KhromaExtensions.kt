@@ -3,6 +3,7 @@ package org.abimon.khroma
 import org.abimon.khroma.effects.KhromaCustom
 import org.abimon.khroma.responses.RazerChromaResult
 import java.awt.Color
+import java.awt.event.KeyEvent
 
 typealias KhromaAPIResult=Pair<KhromaAPI?, RazerChromaResult?>
 
@@ -35,3 +36,7 @@ suspend fun KhromaAPI.rippleOut(colour: Color, delay: Long = 50) {
         kotlinx.coroutines.delay(delay)
     }
 }
+//operator fun KhromaFrame.set(char: Char, value: Color) = set(char, value.bgr)
+//operator fun KhromaFrame.set(char: Char, value: Int) {
+//
+//}
