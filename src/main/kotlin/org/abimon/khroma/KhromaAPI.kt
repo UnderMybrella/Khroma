@@ -12,6 +12,7 @@ import com.github.kittinunf.fuel.jackson.jacksonDeserializerOf
 import com.github.kittinunf.fuel.jackson.mapper
 import kotlinx.coroutines.*
 import org.abimon.khroma.effects.KhromaEffect
+import org.abimon.khroma.effects.KhromaEffectBuilder
 import org.abimon.khroma.requests.RazerChromaApplication
 import org.abimon.khroma.responses.RazerChromaHeartbeat
 import org.abimon.khroma.responses.RazerChromaResult
@@ -64,6 +65,12 @@ class KhromaAPI(val uri: String) {
     suspend fun createKeyboardEffect(effect: KhromaEffect<*>): RazerChromaResult {
         waitUntilActive()
         return Fuel.put("$uri/keyboard").jsonBody(effect).awaitObject(safeJacksonDeserializerOf())
+    }
+
+    fun createKeyboardEffectBlocking(effect: KhromaEffectBuilder) = runBlocking { createKeyboardEffect(effect) }
+    suspend fun createKeyboardEffect(effect: KhromaEffectBuilder) {
+        waitUntilActive()
+        effect.run(this)
     }
 
     fun createMousepadEffectBlocking(effect: KhromaEffect<*>) = runBlocking { createMousepadEffect(effect) }

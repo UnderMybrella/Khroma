@@ -1,9 +1,10 @@
 package org.abimon.khroma.keyboards
 
+import org.abimon.khroma.KeyboardLayout
 import org.abimon.khroma.keyboards.KhromaFrame.Companion.set
 
 object KeyboardLayouts {
-    val enUS: Map<Key, Pair<Int, Int>> = HashMap<Key, Pair<Int, Int>>().apply {
+    val enUS: KeyboardLayout = HashMap<Key, Pair<Int, Int>>().apply {
         this[Key.ESCAPE] = 1 to 0
         this[Key.F1] = 3 to 0
         this[Key.F2] = 4 to 0

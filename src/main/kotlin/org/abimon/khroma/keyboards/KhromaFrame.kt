@@ -48,6 +48,14 @@ data class KhromaFrame(val rows: Array<IntArray> = Array(ROW_LIMIT) { IntArray(
 
     operator fun get(x: Int, y: Int): Int = this[y][x]
 
+    infix fun overwriteWith(frame: KhromaFrame) {
+        INDICES.forEach { (x, y) -> this[x, y] = frame[x, y] }
+    }
+
+    infix fun overwriteWith(rows: Array<IntArray>) {
+        INDICES.forEach { (x, y) -> this[x, y] = rows[y][x] }
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
